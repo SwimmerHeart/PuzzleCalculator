@@ -54,12 +54,12 @@
     rgba(0, 0, 0, 0.06);
     padding: 4px;
     width: 100%;
+    margin-bottom: 12px;
 }
 .block-operands{
     justify-content: space-between;
     width: 100%;
     gap: 8px;
-    margin-bottom: 12px;
 }
 .operand{
     width: 100%;
@@ -73,7 +73,6 @@
 .block-numbers {
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 12px;
 }
 .number{
     width: 72px;

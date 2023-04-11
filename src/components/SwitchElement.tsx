@@ -36,7 +36,6 @@ const SwitchElement:React.FC<TSwitchElementProps> = ({mode, toggleMode}) => {
         <Switch onClick={toggleMode}>
             <ModeBlock active={mode}>
                 <SwitchIcon src="/img/eye.png" alt="eye-icon"/>
-                {/*<svg fill="none" height="13" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>*/}
                 <p>Runtime</p>
             </ModeBlock>
             <ModeBlock active={!mode}>

@@ -2,7 +2,7 @@ import React from "react";
 
 export interface IpaletteItem {
     typeButton: string,
-    text: string[] | number[],
+    text: string[],
     classes: string,
     id: string
 }
@@ -24,16 +24,16 @@ export type TModelBlockProps = {
 }
 export interface IButtonProps {
     styleButton: string,
-    number: string | number,
+    number: string,
     mode: boolean,
     fontSize: boolean,
 }
 export type TButtonsProps = {
     item: IpaletteItem,
     currentValue: string,
-    number: string | number,
+    number: string,
     mode: boolean,
-    actionFromKeys: (item:IpaletteItem, number:string | number)=>void
+    actionFromKeys: (item:IpaletteItem, number:string)=>void
 }
 export type TCanvasProps = {
     backgroundActive: boolean,
@@ -42,9 +42,7 @@ export type TCanvasProps = {
 export type TCanvasElementProps = {
     boards: TBoards,
     mode: boolean,
-    currentValue: string,
     removeButtons: (e:React.MouseEvent<HTMLDivElement, MouseEvent>, item:IpaletteItem)=>void,
-    actionFromKeys: (item:IpaletteItem, number:string | number)=>void
 }
 
 export type TPaletteElementProps = {
@@ -55,6 +53,16 @@ export type TPaletteElementProps = {
 export interface IDroppable {
     index: number,
     droppableId: string
+}
+export interface CalculateState {
+    value: number,
+    mode: boolean,
+    paletteBlock: IpaletteItem[],
+    currentValue: string,
+    prevValue: string,
+    sign: string,
+    result: number | string,
+    overwrite: boolean
 }
 
 

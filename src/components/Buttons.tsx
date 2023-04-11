@@ -79,7 +79,7 @@ const Button = styled.div.attrs<IButtonProps>(props => ({
 `
 
 const Buttons:React.FC<TButtonsProps> = ({item, currentValue, number, mode, actionFromKeys}) => {
-    const fontSize = currentValue.length > 9
+    const fontSize:boolean = currentValue.length > 9
     return (
         <Button mode={!mode}
                 number={number}

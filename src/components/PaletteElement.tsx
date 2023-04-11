@@ -43,15 +43,15 @@ const PaletteElement:React.FC<TPaletteElementProps> = ({paletteBlock, isDrag}) =
                                                   }
                                               }
                                 >
-                                    {item.text.map((number: string | number) =>
+                                    {item.text.map((number: string) =>
                                         <div
                                             key={number}
-                                            className={number === '0' ? 'number number-zero' : item.classes}
+                                            className={number === '0' && item.typeButton === 'block-numbers'
+                                                ? 'number number-zero' : item.classes}
                                         >
                                             {number}
                                         </div>
                                     )}
-                                    {/*<div>{item.content}</div>*/}
                                 </BlockButtons>
                             )}
                         </Draggable>

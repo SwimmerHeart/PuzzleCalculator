@@ -3,7 +3,9 @@ import {Draggable, Droppable} from "react-beautiful-dnd";
 import styled from "styled-components";
 import CanvasEmpty from "./CanvasEmpty";
 import Buttons from "./Buttons";
-import {TCanvasElementProps, TCanvasProps} from "../types/types";
+import {IpaletteItem, TCanvasElementProps, TCanvasProps} from "../types/types";
+import {addDigit, addEquals, chooseOperation} from "../features/calculation/calculateSlice";
+import {useAppDispatch, useAppSelector} from "../app/hooks";
 
 
 const Canvas = styled.div<TCanvasProps>`
@@ -33,13 +35,33 @@ const CanvasBlock = styled.div`
 `
 
 
-const CanvasElement:React.FC<TCanvasElementProps> = ({boards, mode, removeButtons, actionFromKeys, currentValue}) => {
-    console.log('=>',boards)
+const CanvasElement:React.FC<TCanvasElementProps> = ({boards, mode, removeButtons}) => {
+    const dispatch = useAppDispatch()
+    const {currentValue, prevValue} = useAppSelector(state=>state.calculation)
+
+    const actionFromKeys = (item:IpaletteItem, number:string) => {
+        if(!mode && item.typeButton === 'block-display'){
+            return
+        }
+        if(!mode && item.typeButton === 'block-numbers'){
+            dispatch(addDigit(number))
+        }
+        else if(!mode && item.typeButton === 'block-operands') {
+            dispatch(chooseOperation(number))
+            if(prevValue !== ''){
+                calculate(number)
+            }
+        }
+        else if(!mode && item.typeButton === 'block-result'){
+            calculate(number)
+        }
+    }
+    const calculate = (number:string) => {
+        dispatch(addEquals(number))
+    }
     return (
         <CanvasBlock>
-            {Object.keys(boards).map((list, i) => {
-                console.log('==> list', list);
-                console.log('==> boards[list]', boards[list])
+            {Object.keys(boards).map((list) => {
                 return (
                     <Droppable key={list} droppableId={list}>
                         {(provided, snapshot) => {
@@ -52,7 +74,6 @@ const CanvasElement:React.FC<TCanvasElementProps> = ({boards, mode, removeButton
                                 >
                                     {boards[list].length ? boards[list].map(
                                             (item, index) => {
-                                                console.log('==> boards[list]', boards[list])
                                                 return (
                                                     <Draggable
                                                         key={item.id}
@@ -61,8 +82,7 @@ const CanvasElement:React.FC<TCanvasElementProps> = ({boards, mode, removeButton
                                                         isDragDisabled={!mode || item.typeButton === 'block-display'}
                                                     >
                                                         {(
-                                                            provided,
-                                                            snapshot
+                                                            provided
                                                         ) => (
                                                             <BlockButtons
                                                                 className={item.typeButton}
@@ -75,7 +95,7 @@ const CanvasElement:React.FC<TCanvasElementProps> = ({boards, mode, removeButton
                                                                 }}
                                                                 onDoubleClick={(e)=>removeButtons(e,item)}
                                                             >
-                                                                {item.text.map((number, index) =>
+                                                                {item.text.map((number) =>
                                                                         <Buttons key={number}
                                                                                  number={number}
                                                                                  mode={mode}
